@@ -1,0 +1,53 @@
+﻿@model Folder
+
+<section class="w-100 vh-100 mt-5 create-folder">
+    <!-- Container for the folder edit section -->
+    <div class="container d-flex w-75 justify-content-between border border-1 p-0 shadow-sm bg-body rounded">
+        <!-- Edit folder form -->
+        <div class="p-5 w-100">
+            <h2>Edit Folder</h2>
+            <hr />
+            <!-- Form for updating folder details -->
+            <form asp-action="UpdateFolder" asp-route-folderid="@Model.FolderId">
+                <div class="form-outline mb-4">
+                    <!-- Folder name input -->
+                    <label asp-for="FolderName" class="form-label"></label><span class="text-danger">*</span>
+                    <input asp-for="FolderName" type="text" class="form-control" autocomplete="off" placeholder="Input a folder name" />
+                    <span asp-validation-for="FolderName" class="text-danger"></span>
+                </div>
+                <div class="form-outline mb-4">
+                    <!-- Folder description textarea -->
+                    <label class="form-label" asp-for="FolderDescription"></label>
+                    <textarea class="form-control" asp-for="FolderDescription" rows="4" placeholder="Write something about your folder ....."></textarea>
+                </div>
+                <div class="form-outline mb-4 d-flex justify-content-between">
+                    <!-- Submit button for updating folder -->
+                    <button type="submit" class="btn btn-success btn-block mb-1 me-1">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                    <!-- Cancel button to return to folder dashboard -->
+                    <a asp-controller="Folder"
+                       asp-action="FolderDashboard"
+                       asp-route-folderid="@Model.FolderId"
+                       class="btn btn-secondary btn-block mb-1">
+                        <i class="fa-solid fa-arrow-rotate-left"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+        <!-- Design on the right side -->
+        <div class="d-none d-md-block text-center w-50" style="background-color: #BCEAD5">
+            <div class="p-5">
+                <i class="fa-solid fa-gear fa-9x mt-5 mb-3" style="color: #8ec3b0;"></i>
+                <figure>
+                    <blockquote class="blockquote">
+                        <p> “The measure of intelligence is the ability to change.”</p>
+                    </blockquote>
+                    <figcaption class="blockquote-footer">
+                        <cite title="Source Title">Albert Einstein</cite>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+</section>

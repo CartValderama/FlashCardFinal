@@ -1,0 +1,43 @@
+﻿@model Deck
+
+<section class="container mb-5">
+    <!-- Deck navigation and actions -->
+    <div class="d-flex justify-content-between align-items-end mt-5">
+        <!-- Return to folder dashboard button -->
+        <a asp-controller="Folder"
+           asp-action="FolderDashboard"
+           asp-route-folderid="@Model.FolderId"
+           class="btn btn-secondary btn-block mb-1">
+            <i class="fa-solid fa-arrow-left-long"></i>
+        </a>
+        <div class="d-flex justify-content-center align-items-start text-center">
+            <h1 class="m-0">Deck #@Model.DeckId</h1>
+            <!-- Edit deck button -->
+            <a class="link-check text-decoration-none ms-2"
+               asp-controller="Deck"
+               asp-action="UpdateDeck"
+               asp-route-deckid="@Model.DeckId">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </a>
+        </div>
+        <!-- Delete deck button -->
+        <a type="button"
+           class="link-danger text-decoration-none ms-3"
+           data-bs-toggle="modal"
+           data-bs-target="#deletedeck"
+           asp-route-deckid="@Model.DeckId">
+            <i class="fa-solid fa-trash fa-2x"></i>
+        </a>
+    </div>
+    <hr />
+    <!-- Deck introduction -->
+    <div class="d-flex justify-content-even align-items-baseline flex-wrap mt-4 mb-4" style="word-break:break-word">
+        <!-- Deck name -->
+        <h2 class="m-2 ms-0 me-5">@Model.DeckName</h2>
+        <!-- Deck description -->
+        <p class="m-1">@Model.DeckDescription</p>
+    </div>
+    <!-- Include the Delete Deck modal and the list of flashcards -->
+    <partial name="_ModalDeleteDeck" model="@Model" />
+    <partial name="_ListFlashcard" model="@Model" />
+</section>

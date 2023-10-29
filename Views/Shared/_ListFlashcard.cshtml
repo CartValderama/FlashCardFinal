@@ -1,0 +1,114 @@
+﻿@model Deck
+
+<div class="d-flex justify-content-between">
+    <!-- Button to start flashcards -->
+    <a class="btn btn-success"
+       asp-controller="Flashcard" 
+       asp-action="FlashcardTypeOne" 
+       asp-route-deckid="@Model.DeckId">
+        Start 
+        <i class="fa-solid fa-play ms-2"></i>
+    </a>
+    <!-- Button to create a new flashcard -->
+    <a class="btn btn-secondary text-decoration-none"
+       asp-controller="Flashcard"
+       asp-action="CreateFlashcard"
+       asp-route-deckid="@Model.DeckId">
+        Create Flashcard
+    </a>
+</div>
+
+<!-- Loop through each flashcard in the model -->
+@foreach (var flashcard in Model.Flashcards)
+{
+    <div class="card d-flex p-3 mt-3" style="background: radial-gradient(circle at top, #BCEAD5 , #9ED5C5);">
+        <div class="d-flex flex-column">
+            <div class="d-flex flex-column">
+                <h3>Question:</h3>
+                <!-- Display the flashcard question -->
+                <p>@flashcard.Question</p>
+            </div>
+            <div class="d-flex flex-column">
+                <h3>Answer:</h3>
+                <!-- Display the flashcard answer -->
+                <p>@flashcard.Answer</p>
+            </div>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-around mt-3">
+            <!-- Button to update the flashcard -->
+            <a class="btn btn-outline-secondary text-decoration-none ms-2"
+               asp-controller="Flashcard"
+               asp-action="UpdateFlashcard"
+               asp-route-flashcardid="@flashcard.FlashcardId">
+                Update
+            </a>
+            <!-- Button to delete the flashcard with a modal confirmation -->
+            <a type="button"
+               class="btn btn-outline-danger text-decoration-none ms-3"
+               data-bs-toggle="modal"
+               data-bs-target="#deletedeck-@flashcard.FlashcardId"
+               asp-route-deleteid="@Model.DeckId">
+                Delete
+            </a>
+        </div>
+        <!-- Modal for deleting the flashcard -->
+        <div class="modal fade" id="deletedeck-@flashcard.FlashcardId" tabindex="-1" role="dialog" aria-labelledby="deletemodal" aria-hidden="true">
+            <!-- Modal content -->
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete Flashcard</h5>
+                        <button type="button" class="btn btn-transparent" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-sm d-flex bg-white justify-content-between ps-5 pe-5">
+                            <div class="d-flex flex-column ">
+                                <div style="word-break:break-word">
+                                    <div class="text-danger-emphasis">
+                                        <p><i class="fa-solid fa-folder-closed me-2"></i>   Flashcard ID: @flashcard.FlashcardId</p>
+                                        <p><i class="fa-regular fa-calendar-days me-2"></i> Date Created: @flashcard.CreationDate</p>
+                                        <p>Question: @flashcard.Question</p>
+                                        <p>Answer: @flashcard.Answer</p>
+                                    </div>
+                                    <hr />
+                                    <h6 class="text-danger">Are you sure that you want to delete this flashcard?</h6>
+                                </div>
+                            </div>
+                            <div class="w-50 delete-flashcard d-none d-lg-block"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <a asp-controller="Deck"
+                           asp-action="DeckDashboard"
+                           asp-route-deckid="@Model.DeckId"
+                           class="btn btn-secondary">
+                            <i class="fa-solid fa-arrow-rotate-left"></i>
+                        </a>
+                        <form asp-controller="Flashcard"
+                              asp-action="DeleteConfirmedFlashcard"
+                              asp-route-flashcardid="@flashcard.FlashcardId"
+                              asp-route-deletedeckid="@Model.DeckId" method="post">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Button to create a new flashcard -->
+<a class="btn btn-outline-success text-decoration-none d-flex justify-content-center p-3 mt-3"
+   asp-controller="Flashcard"
+   asp-action="CreateFlashcard"
+   asp-route-deckid="@Model.DeckId">
+    <i class="fa-solid fa-plus fa-3x"></i>
+</a>
+
+
+

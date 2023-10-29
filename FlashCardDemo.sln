@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashCardDemo", "FlashCardDemo.csproj", "{3659159B-30D1-42D7-A807-F51F5836CAC6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BA2D9740-5E08-4316-84A9-D734588D1EA1}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3659159B-30D1-42D7-A807-F51F5836CAC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3659159B-30D1-42D7-A807-F51F5836CAC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3659159B-30D1-42D7-A807-F51F5836CAC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3659159B-30D1-42D7-A807-F51F5836CAC6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BA59C8CA-7FB5-4BB6-B835-C7D5A2AC3EB9}
+	EndGlobalSection
+EndGlobal

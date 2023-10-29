@@ -1,0 +1,54 @@
+﻿@model Deck
+
+<section class="w-100 vh-100 mt-5 create-deck">
+    <div class="container d-flex w-75 justify-content-between border border-1 p-0 shadow-sm bg-body rounded">
+        <!-- Left section with a quote and icon -->
+        <div class="d-none d-md-block text-center w-50" style="background-color: #BCEAD5">
+            <div class="p-5 mt-5">
+                <i class="fas fa-book-open fa-9x mt-5 mb-4" style="color: #8ec3b0;"></i>
+                <figure>
+                    <blockquote class="blockquote">
+                        <p> “An investment in knowledge pays the best interest.”</p>
+                    </blockquote>
+                    <figcaption class="blockquote-footer">
+                        <cite title="Source Title">Benjamin Franklin</cite>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+        <!-- Right section for creating a new deck -->
+        <div class="p-5 w-100">
+            <h2>Create New Deck</h2>
+            <hr />
+            <form asp-action="CreateDeckInFolder" asp-route-folderid="@Model.FolderId">
+                <!-- Hidden input to store the folder ID -->
+                <input type="hidden" value="@Model.FolderId" asp-for="FolderId" />
+                <div class="form-group">
+                    <!-- Deck Name input field -->
+                    <label asp-for="DeckName"></label><span class="text-danger">*</span>
+                    <input asp-for="DeckName" class="form-control" />
+                    <span asp-validation-for="DeckName" class="text-danger"></span>
+                </div>
+                <div class="form-outline mb-4">
+                    <!-- Deck Description textarea -->
+                    <label class="form-label" asp-for="DeckDescription"></label>
+                    <textarea class="form-control" asp-for="DeckDescription" rows="4" placeholder="Write something about your deck ....."></textarea>
+                    <span asp-validation-for="DeckDescription" class="text-danger"></span>
+                </div>
+                <div class="form-outline mb-4 d-flex justify-content-between">
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-success btn-block mb-1 me-1">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                    <!-- Cancel button leading back to the folder dashboard -->
+                    <a asp-controller="Folder"
+                       asp-action="FolderDashboard"
+                       asp-route-folderid="@Model.FolderId"
+                       class="btn btn-secondary btn-block mb-1">
+                        <i class="fa-solid fa-arrow-rotate-left"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

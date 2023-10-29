@@ -1,0 +1,52 @@
+﻿@model Folder
+
+<div class="row row-cols-1 row-cols-md-3 g-5 p-2">
+    <div class="col">
+        <!-- Button to create a new deck in the folder -->
+        <a class="btn btn-outline-success text-decoration-none d-flex justify-content-center align-items-center shadow-md"
+           style="height: 15rem;"
+           asp-controller="Deck"
+           asp-action="CreateDeckInFolder"
+           asp-route-folderid="@Model.FolderId">
+            <i class="fa-solid fa-plus fa-5x"></i>
+        </a>
+    </div>
+    <!-- Loop through each deck in the model -->
+    @foreach (var deck in Model.Decks)
+    {
+        <div class="col">
+            <div class="card" style="height: 15rem; background-color: #c1eabc;">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <!-- Display the deck name -->
+                @deck.DeckName
+                    <!-- Button to navigate to the deck dashboard -->
+                    <a class="btn btn-light"
+                       type="button"
+                       asp-controller="Deck"
+                       asp-action="DeckDashboard"
+                       asp-route-deckid="@deck.DeckId">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </a>
+                </div>
+                <div class="card-body d-flex flex-column justify-content-evenly overflow-hidden">
+                    <!-- Display deck description -->
+                    <p class="card-text">@deck.DeckDescription</p>
+                    <!-- Display the total number of flashcards in the deck -->
+                    <p>Flashcard total: @deck.Flashcards.Count()</p>
+                </div>
+                <div class="card-footer text-muted d-flex justify-content-between">
+                    <!-- Display the creation date of the deck -->
+                @deck.CreationDate
+                    <!-- Button to play flashcards in the deck -->
+                    <a class="btn btn-light"
+                       asp-controller="Flashcard"
+                       asp-action="FlashcardTypeOne"
+                       asp-route-deckid="@deck.DeckId">
+                        Play<i class="fa-solid fa-play ms-2" style="color: green"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

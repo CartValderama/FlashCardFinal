@@ -1,0 +1,44 @@
+﻿@model Folder
+
+<section class="container mb-5">
+    <!-- Container for the folder details section -->
+    <div class="d-flex justify-content-between align-items-end mt-5">
+        <!-- Return to Library button -->
+        <a asp-controller="Library"
+           asp-action="ListFolderAndDeck"
+           class="btn btn-secondary btn-block">
+            <i class="fa-solid fa-arrow-left-long"></i>
+        </a>
+        <!-- Folder title and options -->
+        <div class="d-flex justify-content-end align-items-start">
+            <!-- Folder title -->
+            <h1 class="m-0">Folder #@Model.FolderId</h1>
+            <!-- Edit Folder button -->
+            <a class="link-primary text-decoration-none ms-2"
+               asp-controller="Folder"
+               asp-action="UpdateFolder"
+               asp-route-folderid="@Model.FolderId">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </a>
+        </div>
+        <!-- Delete Folder button -->
+        <a type="button"
+           class="link-danger text-decoration-none ms-3"
+           data-bs-toggle="modal"
+           data-bs-target="#deletefolder"
+           asp-route-folderid="@Model.FolderId">
+            <i class="fa-solid fa-trash fa-2x"></i>
+        </a>
+    </div>
+    <hr />
+    <!-- Folder details -->
+    <div class="d-flex justify-content-even align-items-baseline flex-wrap mt-4 mb-4" style="word-break:break-word">
+        <!-- Folder name and description -->
+        <h2 class="m-2 ms-0 me-5">@Model.FolderName</h2>
+        <p>@Model.FolderDescription</p>
+    </div>
+    <!-- Partial view to list decks -->
+    <partial name="_ListDeck" model="@Model" />
+    <!-- Partial view for deleting the folder -->
+    <partial name="_ModalDeleteFolder" model="@Model" />
+</section>

@@ -1,0 +1,71 @@
+﻿
+<!--- main --->
+<!-- Welcome Section -->
+<section class="welcome-container">
+    <div class="welcome-text">
+        <h2>Flashcard</h2>
+        <a class="btn btn-create-flashcard"
+                asp-controller="Deck"
+                asp-action="CreateDeck">
+            Start Now
+        </a>
+    </div>
+    <!-- Shape Icons -->
+    <div class="shape shape-one"><i class="fa-solid fa-clover fa-8x" style="color: #def5e5;"></i></div>
+    <div class="shape shape-two"><i class="fa-solid fa-heart fa-8x" style="color: #def5e5;"></i></div>
+    <div class="shape shape-three"><i class="fa-solid fa-square fa-8x" style="color: #def5e5;"></i></div>
+    <div class="shape shape-four"><i class="fa-solid fa-star fa-8x" style="color: #def5e5;"></i></div>
+</section>
+
+<!-- Flashcard Type Introduction Section -->
+<section class="flashcard-type-intro">
+    <div>
+        <h1>The Journey</h1>
+        <p>
+            Unlock the door to effective learning and personal growth with our flashcard app.
+            Don't miss this opportunity to make education an exciting adventure.
+
+            Ready to begin your learning journey? Sign-up and start exploring. Your path to success is just a click away.
+        </p>
+        <a class="btn btn-create-flashcard text-decoration-none link-dark" href="#demo">Try Demo</a>
+    </div>
+</section>
+
+<!-- Flashcard Example Container Section -->
+<section class="flashcard-example-container" id="demo">
+    <div class="flashcard-example">
+        <div class="flashcard-example-content">
+            <!-- Food Quiz Demo Card -->
+            <a class="card border border-0 text-decoration-none"
+               type="button"
+               asp-controller="Flashcard"
+               asp-action="FlashcardTypeOne"
+               asp-route-deckid="1">
+                <img src="~/img/food.jpeg" class="card-img-top" alt="Fissure in Sandstone" />
+                <div class="card-body">
+                    <h5 class="card-title">Food Quiz Demo</h5>
+                    <p class="card-text">One cannot think well, love well, sleep well, if one has not dined well.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="flashcard-example">
+        <div class="flashcard-example-content">
+            <!-- History Quiz Demo Card -->
+            <a class="card border border-0 text-decoration-none"
+               type="button"
+               asp-controller="Flashcard"
+               asp-action="FlashcardTypeOne"
+               asp-route-deckid="2">
+                <img src="~/img/history.jpg" class="card-img-top" alt="Fissure in Sandstone" />
+                <div class="card-body">
+                    <h5 class="card-title">History Quiz Demo</h5>
+                    <p class="card-text">A generation which ignores history has no past and no future.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+<!--- main --->
+
+<partial name="_Footer"/>

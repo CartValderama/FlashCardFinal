@@ -1,0 +1,118 @@
+﻿@model Deck
+
+<section class="container" style="margin-bottom: 10rem">
+    <!-- Deck navigation and actions -->
+    <div class="d-flex justify-content-between align-items-end mt-5">
+        <!-- Return to folder dashboard button -->
+        <a asp-controller="Folder"
+           asp-action="FolderDashboard"
+           asp-route-folderid="@Model.FolderId"
+           class="btn btn-secondary btn-block mb-1">
+            <i class="fa-solid fa-arrow-left-long"></i>
+        </a>
+        <!-- Deck title -->
+        <h1 class="m-0">@Model.DeckName</h1>
+        <!-- Deck settings button -->
+        <a class="link-secondary text-decoration-none ms-2"
+           asp-controller="Deck"
+           asp-action="DeckDashboard"
+           asp-route-deckid="@Model.DeckId">
+            <i class="fa-solid fa-gear fa-2x"></i>
+        </a>
+    </div>
+    <hr />
+    <!-- Flashcard type selection buttons -->
+    <div class="d-flex justify-content-center mt-5">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <!-- Flashcard type one button -->
+            <a class="btn btn-outline-secondary active"
+               asp-controller="Flashcard"
+               asp-action="FlashcardTypeOne"
+               asp-route-deckid="@Model.DeckId">
+                Type 1
+            </a>
+            <!-- Flashcard type two button -->
+            <a class="btn btn-outline-secondary"
+               asp-controller="Flashcard"
+               asp-action="FlashcardTypeTwo"
+               asp-route-deckid="@Model.DeckId">
+                Type 2
+            </a>
+            <a class="btn btn-outline-secondary"
+               asp-controller="Flashcard"
+               asp-action="FlashcardTypeThree"
+               asp-route-deckid="@Model.DeckId">
+                Type 3
+            </a>
+        </div>
+    </div>
+    <!-- Instructions -->
+    <div class="instruction mt-4 p-3">
+        <p>Flip the flashcard to reveal the Answer </p>
+    </div>
+    <!-- Progress bar -->
+    <div class="container mt-3 mb-4">
+        <div class="progress">
+            <div id="progress-bar1"
+                 class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                 role="progressbar"
+                 style="width: 0%"
+                 aria-valuenow="0"
+                 aria-valuemin="0"
+                 aria-valuemax="100"></div>
+        </div>
+    </div>
+    <!-- Flashcard carousel -->
+    <div id="flashcard-default"
+         class="carousel slide d-flex flex-column w-100 justify-content-evenly align-items-center"
+         data-mdb-touch="false">
+
+        <div class="carousel-inner w-75 d-flex align-items-center text-center p-5 rounded-5 shadow" style="background-color: #CDFAD5; height: 30rem;">
+            <!-- Introduction card for the deck -->
+            <div class="carousel-item active">
+                <div class="d-flex flex-column align-items-center">
+                    <h1>Start</h1>
+                    <p>Introduction card of @Model.DeckName Deck</p>
+                    <p>Date of Creation: @Model.CreationDate</p>
+                </div>
+            </div>
+            <!-- Flashcards in the deck -->
+            @foreach (var flashcard in Model.Flashcards.OrderBy(x => new Random().Next()).ToList())
+            {
+                <div class="carousel-item w-100 h-100" style="word-break:break-word">
+                    <div class="flip-card-inner w-100 h-100" onclick="rotateCard(this)">
+                        <div class="flip-card-front d-flex flex-column justify-content-center">
+                            <i class="fa-solid fa-clipboard-question fa-2x mb-2"></i>
+                            <p>@flashcard.Question</p>
+                        </div>
+                        <div class="flip-card-back d-flex flex-column justify-content-center">
+                            <i class="fa-solid fa-comment-dots fa-2x mb-2"></i>
+                            @flashcard.Answer
+                        </div>
+                    </div>
+                </div>
+            }
+            <!-- Finish card with restart button -->
+            <div class="carousel-item">
+                <div class="d-flex flex-column align-items-center">
+                    <h1>Finito!</h1>
+                    <button id="restart" class="btn btn-outline-secondary" style="width:8rem;" type="button" onclick="restartCarousel()">
+                        Restart
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Navigation buttons for the carousel -->
+        <div class="d-flex align-items-center justify-content-between mt-4" style="width: 15rem;">
+            <button id="prev" class="btn btn-outline-secondary" type="button" data-bs-target="#flashcard-default" data-bs-slide="prev">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <i class="fa-solid fa-crown fa-2x"></i>
+            <button id="next" class="btn btn-outline-secondary" type="button" data-bs-target="#flashcard-default" data-bs-slide="next">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+

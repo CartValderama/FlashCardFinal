@@ -1,0 +1,37 @@
+﻿@model FolderAndDeckListViewModel
+
+<div class="row row-cols-2 row-cols-md-5 row-cols-auto justify-content-start  list-folderdeck">
+    <!-- Loop through each folder in the model -->
+    @foreach (var folder in Model.Folders)
+    {
+        <div class="col">
+            <div class="row row-cols-2 justify-content-center">
+                <!-- Link to navigate to the folder dashboard -->
+                <a class="link-secondary text-decoration-none p-2 text-center"
+                   asp-controller="Folder"
+                   asp-action="FolderDashboard"
+                   asp-route-folderid="@folder.FolderId">
+                    <i class="fa-solid fa-folder fa-5x"></i>
+                    <p class="m-0">@folder.FolderName</p>
+                </a>
+            </div>
+        </div>
+    }
+
+    <!-- Loop through each deck in the model -->
+    @foreach (var deck in Model.Decks)
+    {
+        <div class="col">
+            <div class="row row-cols-2 justify-content-center">
+                <!-- Link to start flashcards for the deck -->
+                <a class="text-decoration-none icon-link-hover link-success p-2 text-center"
+                   asp-controller="Flashcard"
+                   asp-action="FlashcardTypeOne"
+                   asp-route-deckid="@deck.DeckId">
+                    <i class="fa-regular fa-square fa-5x"></i>
+                    <p class="m-0">@deck.DeckName</p>
+                </a>
+            </div>
+        </div>
+    }
+</div>

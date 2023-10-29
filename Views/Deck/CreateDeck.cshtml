@@ -1,0 +1,59 @@
+﻿@model CreateDeckViewModel
+
+<section class="w-100 vh-100 mt-5 create-deck">
+    <div class="container d-flex w-75 justify-content-between border border-1 p-0 shadow-sm bg-body rounded">
+        <!-- Left section with quote and icon -->
+        <div class="d-none d-md-block text-center w-50" style="background-color: #BCEAD5">
+            <div class="p-5 mt-5">
+                <i class="fas fa-book-open fa-9x mt-5 mb-4" style="color: #8ec3b0;"></i>
+                <figure>
+                    <blockquote class="blockquote">
+                        <p> “An investment in knowledge pays the best interest. ”</p>
+                    </blockquote>
+                    <figcaption class="blockquote-footer">
+                        <cite title="Source Title">Emil Magnussen</cite>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+        <!-- Right section for creating a new deck -->
+        <div class="p-5 w-100">
+            <h2>Create New Deck</h2>
+            <hr />
+            <!-- Form for creating a new deck -->
+            <form asp-controller="Deck" asp-action="CreateDeck">
+                <!-- Deck Name input field -->
+                <div class="form-outline mb-4">
+                    <label asp-for="Deck.DeckName"></label><span class="text-danger">*</span>
+                    <input asp-for="Deck.DeckName" type="text" class="form-control" autocomplete="off" placeholder="Input a deck name" />
+                    <span asp-validation-for="Deck.DeckName" class="text-danger"></span>
+                </div>
+                <!-- Folder selection dropdown -->
+                <div class="form-outline mb-4">
+                    <label asp-for="Deck.FolderId"></label>
+                    <!-- Use a view model to get access to this selectlist -->
+                    <select asp-for="Deck.FolderId" asp-items="@Model.FolderSelectList" class="form-control">   
+                        <option value="">None</option>
+                    </select>
+                    <span asp-validation-for="Deck.FolderId" class = "text-danger"></span>
+                </div>
+                <!-- Deck Description textarea -->
+                <div class="form-outline mb-4">
+                    <label class="form-label" asp-for="Deck.DeckDescription"></label>
+                    <textarea class="form-control" asp-for="Deck.DeckDescription" rows="4" placeholder="Write something about your deck ....."></textarea>
+                </div>
+                <!-- Submit and Cancel buttons -->
+                <div class="form-outline mb-4 d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success btn-block mb-1 me-1">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                    <a asp-controller="Folder"
+                       asp-action="FolderDashboard"
+                       class="btn btn-secondary btn-block mb-1">
+                        <i class="fa-solid fa-arrow-rotate-left"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

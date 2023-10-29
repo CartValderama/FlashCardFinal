@@ -1,0 +1,58 @@
+﻿@model Flashcard
+
+<section class="w-100 vh-100 mt-5 create-flashcard">
+    <!-- Container for creating a new flashcard -->
+    <div class="container d-flex w-75 justify-content-between border border-1 p-0 shadow-sm bg-body rounded">
+        <!-- Left section with a quote and icon -->
+        <div class="d-none d-md-block text-center w-50" style="background-color: #BCEAD5">
+            <div class="p-5 mt-5">
+                <i class="fa-solid fa-graduation-cap fa-9x mt-4 mb-4" style="color: #8ec3b0;"></i>
+                <figure>
+                    <blockquote class="blockquote">
+                        <p> “Education is the kindling of a flame, not the filling of a vessel.”</p>
+                    </blockquote>
+                    <figcaption class="blockquote-footer">
+                        <cite title="Source Title">Socrates</cite>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+        <!-- Right section for creating a new flashcard -->
+        <div class="p-5 w-100">
+            <h2>Create New Flashcard</h2>
+            <hr />
+            <form asp-action="CreateFlashcard" asp-route-deckid="@Model.DeckId" class="d-flex flex-column justify-content-between h-75">
+                <div>
+                    <!-- Hidden input to store the deck ID -->
+                    <input type="hidden" value="@Model.DeckId" asp-for="DeckId" />
+                    <div class="form-outline mb-4">
+                        <!-- Flashcard question input field -->
+                        <label asp-for="Question"></label><span class="text-danger">*</span>
+                        <input asp-for="Question" class="form-control" />
+                        <span asp-validation-for="Question" class="text-danger"></span>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <!-- Flashcard answer input field -->
+                        <label asp-for="Answer"></label><span class="text-danger">*</span>
+                        <input asp-for="Answer" class="form-control" />
+                        <span asp-validation-for="Answer" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                    <!-- Return to deck dashboard button -->
+                    <a asp-controller="Deck"
+                       asp-action="DeckDashboard"
+                       asp-route-deckid="@Model.DeckId"
+                       class="btn btn-secondary">
+                        <i class="fa-solid fa-arrow-rotate-left"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+

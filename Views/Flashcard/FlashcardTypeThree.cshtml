@@ -1,0 +1,178 @@
+﻿@model Deck
+
+<section class="container" style="margin-bottom: 10rem">
+    <!-- Deck navigation and actions -->
+    <div class="d-flex justify-content-between align-items-end mt-5">
+        <!-- Return to folder dashboard button -->
+        <a asp-controller="Folder"
+           asp-action="FolderDashboard"
+           asp-route-folderid="@Model.FolderId"
+           class="btn btn-secondary btn-block mb-1">
+            <i class="fa-solid fa-arrow-left-long"></i>
+        </a>
+        <!-- Deck title -->
+        <h1 class="m-0">@Model.DeckName</h1>
+        <!-- Deck settings button -->
+        <a class="link-secondary text-decoration-none ms-2"
+           asp-controller="Deck"
+           asp-action="DeckDashboard"
+           asp-route-deckid="@Model.DeckId">
+            <i class="fa-solid fa-gear fa-2x"></i>
+        </a>
+    </div>
+    <hr />
+    <!-- Flashcard type selection buttons -->
+    <div class="d-flex justify-content-center mt-5">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <!-- Flashcard type one button -->
+            <a class="btn btn-outline-secondary"
+               asp-controller="Flashcard"
+               asp-action="FlashcardTypeOne"
+               asp-route-deckid="@Model.DeckId">
+                Type 1
+            </a>
+            <!-- Flashcard type two button -->
+            <a class="btn btn-outline-secondary"
+               asp-controller="Flashcard"
+               asp-action="FlashcardTypeTwo"
+               asp-route-deckid="@Model.DeckId">
+                Type 2
+            </a>
+            <a class="btn btn-outline-secondary active"
+               asp-controller="Flashcard"
+               asp-action="FlashcardTypeThree"
+               asp-route-deckid="@Model.DeckId">
+                Type 3
+            </a>
+        </div>
+    </div>
+    <!-- Instructions -->
+    <div class="instruction mt-4 p-3">
+        <p>Input the answer and GPT will review it</p>
+    </div>
+    <!-- Progress bar -->
+    <div class="container mt-3 mb-4">
+        <div class="progress">
+            <div id="progress-bar3"
+                 class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                 role="progressbar"
+                 style="width: 0%"
+                 aria-valuenow="0"
+                 aria-valuemin="0"
+                 aria-valuemax="100"></div>
+        </div>
+    </div>
+    <div class="carousel-wrapper d-flex align-items-center justify-content-center">
+        <!-- Flashcard carousel -->
+        <div id="flashcard3-carousel"
+             class="carousel slide d-flex flex-column w-75 justify-content-evenly align-items-center ms-3 me-3"
+             data-mdb-touch="false">
+
+            <div class="carousel-inner type-three-carousel-inner d-flex align-items-center text-center rounded-5 shadow" style="background-color: #CDFAD5; height: 45rem;">
+                <!-- Introduction card for the deck -->
+                <div class="carousel-item active">
+                    <div class="d-flex  p-5 flex-column align-items-center">
+                        <h1>Start</h1>
+                        <p>Introduction card of @Model.DeckName Deck</p>
+                        <p>Date of Creation: @Model.CreationDate</p>
+                    </div>
+                </div>
+                <!-- Flashcards in the deck -->
+                @foreach (var flashcard in Model.Flashcards.OrderBy(x => new Random().Next()).ToList())
+                {
+                    <!---------- Variables ---------->
+                    var question = "question_" + flashcard.FlashcardId;
+                    var explanation = "explanation_" + flashcard.FlashcardId;
+                    var rating = "rating_" + flashcard.FlashcardId;
+                    var quality = "quality_" + flashcard.FlashcardId;
+                    var ans3 = "ans3_" + flashcard.FlashcardId;
+                    var ins3 = "ins3_" + flashcard.FlashcardId;
+                    var error = "error_" + flashcard.FlashcardId;
+                    var loading = "loading_" + flashcard.FlashcardId;
+                    var submit = "submit_" + flashcard.FlashcardId;
+                    var status = "status_" + flashcard.FlashcardId;
+                    var check = "check_" + flashcard.FlashcardId;
+
+                    <div class="carousel-item w-100 h-100" style="word-break:break-word">
+                        <div class="d-flex h-100" id="type-3">
+                            <div class="d-flex flex-column p-4 justify-content-center" id="@rating">
+                                <div class="d-flex flex-column justify-content-end">
+                                    <p class="mb-3">Flashcard's Question:</p>
+                                    <p id="@question">@flashcard.Question</p>
+                                </div>
+                                <div class="d-flex flex-column align-items-center">
+                                    <textarea id="@flashcard.FlashcardId" class="w-100" placeholder="Your answer here"></textarea>
+                                    <p id="@error" style="color: red"></p>
+                                    <button id="@submit" class="btn btn-primary w-50 submit3" type="button" onclick="getAnswer(@flashcard.FlashcardId)">
+                                        <div id="@status" style="display: none">
+                                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                        <i class="fa-solid fa-check" id="@check"></i>
+                                    </button>
+                                </div>
+                                <p id="@quality"></p>
+                            </div>
+                            <div class="p-3" style="background-color: #F0F0F0;">
+                                <div id="@ins3" class="flex-column align-items-center justify-content-center" style="display: flex">
+                                    <h2 class="mb-3">Instructions</h2>
+                                    <p>- The flashcard's questions and answers should make sense for GPT to help.</p>
+                                    <p>- For each flashcard, read the question and input your answer in the provided text box.</p>
+                                    <p>- Click the "Submit" button to get feedback from GPT. Please wait patiently while GPT reviews your answer. </p>
+                                    <p>- GPT will provide an explanation and rating for your answer.</p>
+                                    <div id="@loading" class="justify-content-around" style="height: 2rem; width: 10rem; display: none;">
+                                        <div class="spinner-grow text-success" role="status" style="width: 2rem; height: 2rem;">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                        <div class="spinner-grow text-danger" role="status" style="width: 2rem; height: 2rem;">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                        <div class="spinner-grow text-warning" role="status" style="width: 2rem; height: 2rem;">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                        <div class="spinner-grow text-info" role="status" style="width: 2rem; height: 2rem;">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="@ans3" class="flex-column h-100" style="display: none;">
+                                    <div class="d-flex flex-column h-50 justify-content-center border-bottom border-4">
+                                        <p class="mb-3">Flashcard's Answer:</p>
+                                        <p class="m-0">@flashcard.Answer</p>
+                                    </div>
+                                    <div class="d-flex flex-column  h-50 justify-content-center">
+                                        <p class="mb-3">GPT explanation:</p>
+                                        <p id="@explanation" class="m-0">ChatGPT Rating and Suggestion</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!-- Finish card with restart button -->
+                <div class="carousel-item">
+                    <div class="d-flex flex-column align-items-center">
+                        <h1>Finito!</h1>
+                        <button id="restart" class="btn btn-outline-secondary" style="width:8rem;" type="button" onclick="restartMatch()">
+                            Restart
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Navigation buttons for the carousel -->
+            <div class="d-flex align-items-center justify-content-between mt-4" style="width: 15rem;">
+                <!-- Prev Button -->
+                <button id="prev" class="btn btn-outline-secondary" type="button" data-bs-target="#flashcard3-carousel" data-bs-slide="prev">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <i class="fa-solid fa-crown fa-2x"></i>
+                <!-- Next Button -->
+                <button id="next" class="btn btn-outline-secondary" type="button" data-bs-target="#flashcard3-carousel" data-bs-slide="next">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</section>

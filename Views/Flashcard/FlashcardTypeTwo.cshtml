@@ -1,0 +1,101 @@
+﻿@model Deck
+
+<section class="container" style="margin-bottom: 10rem">
+    <!-- Deck navigation and actions -->
+    <div class="d-flex justify-content-between align-items-end mt-5">
+        <!-- Return to folder dashboard button -->
+        <a asp-controller="Folder"
+           asp-action="FolderDashboard"
+           asp-route-folderid="@Model.FolderId"
+           class="btn btn-secondary btn-block mb-1">
+            <i class="fa-solid fa-arrow-left-long"></i>
+        </a>
+        <!-- Deck title -->
+        <h1 class="m-0">@Model.DeckName</h1>
+        <!-- Deck settings button -->
+        <a class="link-secondary text-decoration-none ms-2"
+           asp-controller="Deck"
+           asp-action="DeckDashboard"
+           asp-route-deckid="@Model.DeckId">
+            <i class="fa-solid fa-gear fa-2x"></i>
+        </a>
+    </div>
+    <hr />
+    <!-- Flashcard type selection buttons -->
+    <div class="d-flex justify-content-center mt-5">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <!-- Flashcard type one button -->
+            <a class="btn btn-outline-secondary"
+               asp-controller="Flashcard"
+               asp-action="FlashcardTypeOne"
+               asp-route-deckid="@Model.DeckId">
+                Type 1
+            </a>
+            <!-- Flashcard type two button -->
+            <a class="btn btn-outline-secondary active"
+               asp-controller="Flashcard"
+               asp-action="FlashcardTypeTwo"
+               asp-route-deckid="@Model.DeckId">
+                Type 2
+            </a>
+            <a class="btn btn-outline-secondary"
+               asp-controller="Flashcard"
+               asp-action="FlashcardTypeThree"
+               asp-route-deckid="@Model.DeckId">
+                Type 3
+            </a>
+        </div>
+    </div>
+    <!-- Instructions -->
+    <div class="instruction mt-4 p-3">
+        <p id="ins">Match the correct Questions and Answers <br /> Select a question first then an answer</p>
+    </div>
+    <div class="container">
+        <!-- Progress bar -->
+        <div class="progress mt-3">
+            <div id="progress-bar2"
+                 class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                 role="progressbar"
+                 style="width: 0%"
+                 aria-valuenow="0"
+                 aria-valuemin="0"
+                 aria-valuemax="100"></div>
+        </div>
+        <!-- Game finish message and restart button -->
+        <div id="game-finish-message" class="text-center mt-5" style="display: none;">
+            <h4>Congratulations! You have completed the game.</h4>
+            <button id="restart" class="btn btn-outline-secondary" style="width:8rem;" type="button" onclick="restartMatch()">
+                Restart
+            </button>
+        </div>
+        <!-- Match card and answer card display -->
+        <div class="d-flex justify-content-between mt-3">
+            <div class="d-flex flex-column align-items-center justify-content-center w-50 text-center" style="word-break:break-word">
+                <div class="row row-cols-1 row-cols-lg-3 row-cols-auto g-1 p-2">
+                    <!-- Display match questions -->
+                    @foreach (var flashcard in Model.Flashcards.OrderBy(x => new Random().Next()).ToList())
+                    {
+                        <div class="col match-card">
+                            <div class="question shadow-sm rounded-1 w-100 h-100 user-select-none" id="@flashcard.FlashcardId">
+                                @flashcard.Question
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="d-flex flex-column align-items-center w-50 text-center">
+                <div class="row row-cols-1 row-cols-md-3 row-cols-auto g-1 p-2">
+                    <!-- Display match answers -->
+                    @foreach (var flashcard in Model.Flashcards.OrderBy(x => new Random().Next()).ToList())
+                    {
+                        var flashcardid = flashcard.FlashcardId + "_target";
+                        <div class="col match-card">
+                            <div class="answer shadow-sm rounded-1 w-100 h-100 user-select-none" id="@flashcardid">@flashcard.Answer</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
